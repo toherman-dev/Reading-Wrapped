@@ -1,3 +1,4 @@
+import doctest
 import requests
 import json
 import numpy as np
@@ -7,6 +8,7 @@ import statistics as st
 def get_books(isbns):
     """ Return books given a list of ISBNs
     """
+
     books = [get_book(isbn) for isbn in isbns]
 
     return list(filter(None, books))
@@ -24,7 +26,10 @@ def get_book(isbn):
 
 
 def get_author_name(author_key):
-    """ Return name of author given a author_key
+    """ Return name of author given an author_key
+
+    >>> get_author_name("/authors/OL23919A")
+    'J. K. Rowling'
     """
 
     name = ""
@@ -76,7 +81,7 @@ subjects = list(filter(None, subjects))
 subjects = sum(subjects, [])
 subjects = np.array(subjects)
 
-# get authors
+# get authors' names
 authors = [book.get("authors") for book in books_info]
 authors = list(filter(None, authors))
 authors = sum(authors, [])
@@ -94,3 +99,7 @@ print("On average, you have read {0:0.2f} pages per book.".format(
 print("Your favorite author was {}.".format(st.mode(authors)))
 print("Your favorite genre was {}.".format(st.mode(genres)))
 print("Your favorite subject was {}.".format(st.mode(subjects)))
+
+
+# run doctest
+doctest.testmod()
